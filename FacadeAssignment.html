@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    
+</head>
+<body>
+    <div id="#demo">Find out my id type</div>
+    <button onclick="myFunction()">Click me to know which Id i have used</button>
+    <br>
+    <br />
+    <button id="myBtn">Click me for EventListening</button>
+    <br />
+    <br />
+    <div>a = new Array([1,2,3])</div>
+    <button onclick="myForEach1()">click me to know what is a</button>
+    <div>d = new Date()</div>
+    <button onclick="myForEach2()">click me to know what is d</button>
+
+    <script>
+        var myModule = {
+            addMyEventHandler: function (el, ev, fn) {
+                var type;
+                if (el.addeventListener) {
+                    this.type = el.addEventListener(ev, fn, false);
+                    
+                }
+                else if (el.attachEvent) {
+                    this.type = el.attachEvent("on" + ev, fn);
+                   // console.log("attachEvent");
+                }
+                else {
+                    this.type = el["on" + ev] = fn
+                    //console.log("neither attac event nor add event .done manually");
+                }
+                
+            },
+            myQuerySelector: function () {
+
+                var selectorType = arguments[0];
+                var x;
+                if (selectorType.includes("#")) {
+                    x = document.getElementById(selectorType);
+                    x.innerHTML = "Hi I am getElementById";
+                }
+                else if (selectorType.includes(".")) {
+                    x = document.getElementsByClassName(selectorType);
+                    x.innerHTML = "Hi I am getElementByClassName";
+                }
+                else {
+                    x = document.getElementsByTagName(selectorType);
+                    x.innerHTML = "Hi I am getElementByTag";
+                }
+                return {
+                    result: x
+                }
+
+            },
+
+            myEacHFunc: function () {
+
+                var inputType = arguments[0];
+                
+                 if (Array.isArray(inputType)) {
+                    alert("The entered input is an array")
+                 }
+                else if (typeof (inputType) == "object") {
+                  alert("The enterted type is an Object");
+                 }
+                else {
+                    alert("Sorry try again")
+                }
+            }
+        };
+
+        function myFunction() {
+            var x = myModule.myQuerySelector("#demo");
+            
+        }
+
+        //myModule.addMyEventHandler(document.getElementById("#click"), "click", function () { });
+
+        function myForEach1() {
+            var x = new Array([1, 2, 3]);
+            myModule.myEacHFunc(x);
+        }
+
+        function myForEach2() {
+            var x = new Date();
+            myModule.myEacHFunc(x);
+            
+        }
+
+        //document.getElementById("myBtn").addEventListener("click", displayDate);
+        myModule.addMyEventHandler(document.getElementById("myBtn"), "click", function () {
+            alert("I just got clicked");
+        });
+       
+
+
+    </script>
+
+</body>
+
+</html>
